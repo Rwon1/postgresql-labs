@@ -1,0 +1,6 @@
+﻿test_name,expected_state,actual_state,message
+Отрицательная цена,23514,23514,"new row for relation ""products"" violates check constraint ""products_price_check"""
+Отрицательный остаток,23514,23514,"new row for relation ""products"" violates check constraint ""products_stock_quantity_check"""
+Отсутствующее название,23502,23502,"null value in column ""product_name"" of relation ""products"" violates not-null constraint"
+Повтор артикула,23505,23505,"duplicate key value violates unique constraint ""products_sku_key"""
+Повтор первичного ключа,23505,23505,"duplicate key value violates unique constraint ""products_pkey"""

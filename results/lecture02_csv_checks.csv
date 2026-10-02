@@ -1,0 +1,4 @@
+﻿test_row,expected_state,actual_state,message
+23,23514,23514,"new row for relation ""csv_import_test"" violates check constraint ""products_price_check"""
+24,23502,23502,"null value in column ""product_name"" of relation ""csv_import_test"" violates not-null constraint"
+25,23514,23514,"new row for relation ""csv_import_test"" violates check constraint ""products_stock_quantity_check"""

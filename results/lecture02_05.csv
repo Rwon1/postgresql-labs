@@ -1,0 +1,11 @@
+﻿column_name,data_type,column_default,is_nullable
+product_id,integer,,NO
+sku,character varying,,NO
+product_name,character varying,,NO
+category,character varying,,YES
+price,numeric,,NO
+stock_quantity,integer,0,NO
+is_active,boolean,true,NO
+created_at,timestamp without time zone,CURRENT_TIMESTAMP,NO
+brand,character varying,,YES
+discount_percent,numeric,0,NO
