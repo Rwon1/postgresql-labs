@@ -1,0 +1,5 @@
+A2. Распространённый статус
+SELECT * FROM orders WHERE status='paid';
+
+Seq Scan on orders (estimated rows=65612, width=54)
+  Filter: (status = 'paid'::text)

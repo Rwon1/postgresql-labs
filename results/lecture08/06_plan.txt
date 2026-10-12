@@ -1,0 +1,5 @@
+A3. Период
+SELECT * FROM orders WHERE order_date>=TIMESTAMP '2026-01-01' AND order_date<TIMESTAMP '2026-02-01';
+
+Seq Scan on orders (estimated rows=3613, width=54)
+  Filter: ((order_date >= '2026-01-01 00:00:00'::timestamp without time zone) AND (order_date < '2026-02-01 00:00:00'::timestamp without time zone))

@@ -1,0 +1,13 @@
+B2. До индекса
+SELECT order_id,order_date FROM orders
+WHERE status='cancelled' AND order_date>=TIMESTAMP '2026-01-01';
+
+Seq Scan on orders (estimated rows=1171, width=16) (actual rows=1500, loops=1)
+  Filter: ((order_date >= '2026-01-01 00:00:00'::timestamp without time zone) AND (status = 'cancelled'::text))
+  Rows Removed by Filter: 118500
+  Shared Hit Blocks: 1264
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+Planning Time: 1.144 ms
+Execution Time: 20.755 ms

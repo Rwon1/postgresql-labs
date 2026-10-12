@@ -1,0 +1,23 @@
+B3. После индекса — тот же SQL
+SELECT product_id,COUNT(*) AS positions,SUM(quantity) AS units,
+SUM(quantity*unit_price) AS revenue FROM order_items
+WHERE product_id=880042 GROUP BY product_id;
+
+Aggregate (estimated rows=1, width=56) (actual rows=1, loops=1)
+  Shared Hit Blocks: 243
+  Shared Read Blocks: 3
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+  Bitmap Heap Scan on order_items (estimated rows=239, width=18) (actual rows=240, loops=1)
+    Shared Hit Blocks: 243
+    Shared Read Blocks: 3
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+    Bitmap Index Scan using idx_l08_item_product (estimated rows=239, width=0) (actual rows=240, loops=1)
+      Index Cond: (product_id = 880042)
+      Shared Hit Blocks: 3
+      Shared Read Blocks: 3
+      Temp Read Blocks: 0
+      Temp Written Blocks: 0
+Planning Time: 5.904 ms
+Execution Time: 1.55 ms

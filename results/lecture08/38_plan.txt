@@ -1,0 +1,21 @@
+D4. Большой OFFSET
+SELECT order_id,order_date FROM orders ORDER BY order_date DESC,order_id DESC OFFSET 50000 LIMIT 20;
+
+Limit (estimated rows=20, width=16) (actual rows=20, loops=1)
+  Shared Hit Blocks: 1270
+  Shared Read Blocks: 0
+  Temp Read Blocks: 383
+  Temp Written Blocks: 384
+  Sort (estimated rows=120000, width=16) (actual rows=50020, loops=1)
+    Sort Key: ['order_date DESC', 'order_id DESC']
+    Shared Hit Blocks: 1270
+    Shared Read Blocks: 0
+    Temp Read Blocks: 383
+    Temp Written Blocks: 384
+    Seq Scan on orders (estimated rows=120000, width=16) (actual rows=120000, loops=1)
+      Shared Hit Blocks: 1264
+      Shared Read Blocks: 0
+      Temp Read Blocks: 0
+      Temp Written Blocks: 0
+Planning Time: 1.502 ms
+Execution Time: 173.719 ms

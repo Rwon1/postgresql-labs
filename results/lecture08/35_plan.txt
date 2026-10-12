@@ -1,0 +1,26 @@
+D3. Последние 20 заказов: ORDER BY и LIMIT
+SELECT order_id,order_date,status FROM orders ORDER BY order_date DESC,order_id DESC LIMIT 20;
+
+Limit (estimated rows=20, width=23) (actual rows=20, loops=1)
+  Shared Hit Blocks: 1307
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+  Gather Merge (estimated rows=70588, width=23) (actual rows=20, loops=1)
+    Shared Hit Blocks: 1307
+    Shared Read Blocks: 0
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+    Sort (estimated rows=70588, width=23) (actual rows=10, loops=2)
+      Sort Key: ['order_date DESC', 'order_id DESC']
+      Shared Hit Blocks: 1307
+      Shared Read Blocks: 0
+      Temp Read Blocks: 0
+      Temp Written Blocks: 0
+      Seq Scan on orders (estimated rows=70588, width=23) (actual rows=60000, loops=2)
+        Shared Hit Blocks: 1264
+        Shared Read Blocks: 0
+        Temp Read Blocks: 0
+        Temp Written Blocks: 0
+Planning Time: 2.954 ms
+Execution Time: 116.403 ms

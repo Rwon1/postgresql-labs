@@ -1,0 +1,17 @@
+B1. После индекса — тот же SQL
+SELECT order_id,order_date,status FROM orders
+WHERE customer_id=870042 ORDER BY order_date DESC,order_id DESC LIMIT 20;
+
+Limit (estimated rows=20, width=23) (actual rows=20, loops=1)
+  Shared Hit Blocks: 23
+  Shared Read Blocks: 3
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+  Index Scan using idx_l08_customer_date on orders (estimated rows=119, width=23) (actual rows=20, loops=1)
+    Index Cond: (customer_id = 870042)
+    Shared Hit Blocks: 23
+    Shared Read Blocks: 3
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+Planning Time: 7.346 ms
+Execution Time: 1.704 ms

@@ -1,0 +1,3 @@
+﻿tablename,indexname,indexdef
+order_items,order_items_pkey,CREATE UNIQUE INDEX order_items_pkey ON lecture08.order_items USING btree (order_item_id)
+orders,orders_pkey,CREATE UNIQUE INDEX orders_pkey ON lecture08.orders USING btree (order_id)

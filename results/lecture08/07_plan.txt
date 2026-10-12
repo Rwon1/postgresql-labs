@@ -1,0 +1,10 @@
+A4. JOIN заказов и позиций
+SELECT o.order_id,i.product_id,i.quantity FROM orders o JOIN order_items i USING(order_id) WHERE o.customer_id=870042;
+
+Gather (estimated rows=476, width=20)
+  Hash Join (estimated rows=198, width=20)
+    Hash Cond: (i.order_id = o.order_id)
+    Seq Scan on order_items (estimated rows=200000, width=20)
+    Hash (estimated rows=70, width=8)
+      Seq Scan on orders (estimated rows=70, width=8)
+        Filter: (customer_id = 870042)

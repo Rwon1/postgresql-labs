@@ -1,0 +1,5 @@
+﻿status,orders_count
+cancelled,6000
+completed,36000
+paid,66000
+pending,12000

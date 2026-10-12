@@ -1,0 +1,67 @@
+{
+  "Plan": {
+    "Node Type": "Gather",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Startup Cost": 3147.23,
+    "Total Cost": 9719.85,
+    "Plan Rows": 476,
+    "Plan Width": 20,
+    "Workers Planned": 2,
+    "Single Copy": false,
+    "Plans": [
+      {
+        "Node Type": "Hash Join",
+        "Parent Relationship": "Outer",
+        "Parallel Aware": true,
+        "Async Capable": false,
+        "Join Type": "Inner",
+        "Startup Cost": 2147.23,
+        "Total Cost": 8672.25,
+        "Plan Rows": 198,
+        "Plan Width": 20,
+        "Inner Unique": true,
+        "Hash Cond": "(i.order_id = o.order_id)",
+        "Plans": [
+          {
+            "Node Type": "Seq Scan",
+            "Parent Relationship": "Outer",
+            "Parallel Aware": true,
+            "Async Capable": false,
+            "Relation Name": "order_items",
+            "Alias": "i",
+            "Startup Cost": 0.0,
+            "Total Cost": 6000.0,
+            "Plan Rows": 200000,
+            "Plan Width": 20
+          },
+          {
+            "Node Type": "Hash",
+            "Parent Relationship": "Inner",
+            "Parallel Aware": true,
+            "Async Capable": false,
+            "Startup Cost": 2146.35,
+            "Total Cost": 2146.35,
+            "Plan Rows": 70,
+            "Plan Width": 8,
+            "Plans": [
+              {
+                "Node Type": "Seq Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": true,
+                "Async Capable": false,
+                "Relation Name": "orders",
+                "Alias": "o",
+                "Startup Cost": 0.0,
+                "Total Cost": 2146.35,
+                "Plan Rows": 70,
+                "Plan Width": 8,
+                "Filter": "(customer_id = 870042)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

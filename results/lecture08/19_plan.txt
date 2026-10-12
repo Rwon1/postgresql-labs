@@ -1,0 +1,29 @@
+B3. До индекса
+SELECT product_id,COUNT(*) AS positions,SUM(quantity) AS units,
+SUM(quantity*unit_price) AS revenue FROM order_items
+WHERE product_id=880042 GROUP BY product_id;
+
+Aggregate (estimated rows=1, width=56) (actual rows=1, loops=1)
+  Shared Hit Blocks: 4000
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+  Gather (estimated rows=2, width=56) (actual rows=1, loops=1)
+    Shared Hit Blocks: 4000
+    Shared Read Blocks: 0
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+    Aggregate (estimated rows=1, width=56) (actual rows=0, loops=3)
+      Shared Hit Blocks: 4000
+      Shared Read Blocks: 0
+      Temp Read Blocks: 0
+      Temp Written Blocks: 0
+      Seq Scan on order_items (estimated rows=100, width=18) (actual rows=80, loops=3)
+        Filter: (product_id = 880042)
+        Rows Removed by Filter: 159920
+        Shared Hit Blocks: 4000
+        Shared Read Blocks: 0
+        Temp Read Blocks: 0
+        Temp Written Blocks: 0
+Planning Time: 6.116 ms
+Execution Time: 155.019 ms

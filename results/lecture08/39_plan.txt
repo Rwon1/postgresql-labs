@@ -1,0 +1,35 @@
+D4. Keyset с готовым курсором предыдущей страницы
+SELECT order_id,order_date FROM orders
+WHERE (order_date,order_id)<(SELECT order_date,order_id FROM lecture08.page_cursor)
+ORDER BY order_date DESC,order_id DESC LIMIT 20;
+
+Limit (estimated rows=20, width=16) (actual rows=20, loops=1)
+  Shared Hit Blocks: 1279
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+  Seq Scan on page_cursor (estimated rows=1850, width=16) (actual rows=1, loops=1)
+    Shared Hit Blocks: 1
+    Shared Read Blocks: 0
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+  Gather Merge (estimated rows=23529, width=16) (actual rows=20, loops=1)
+    Shared Hit Blocks: 1279
+    Shared Read Blocks: 0
+    Temp Read Blocks: 0
+    Temp Written Blocks: 0
+    Sort (estimated rows=23529, width=16) (actual rows=10, loops=2)
+      Sort Key: ['orders.order_date DESC', 'orders.order_id DESC']
+      Shared Hit Blocks: 1278
+      Shared Read Blocks: 0
+      Temp Read Blocks: 0
+      Temp Written Blocks: 0
+      Seq Scan on orders (estimated rows=23529, width=16) (actual rows=35000, loops=2)
+        Filter: (ROW(order_date, order_id) < ROW($0, $1))
+        Rows Removed by Filter: 25000
+        Shared Hit Blocks: 1264
+        Shared Read Blocks: 0
+        Temp Read Blocks: 0
+        Temp Written Blocks: 0
+Planning Time: 33.534 ms
+Execution Time: 130.591 ms

@@ -1,0 +1,12 @@
+C. После индекса status
+SELECT * FROM orders WHERE status IN ('paid','completed');
+
+Seq Scan on orders (estimated rows=102100, width=54) (actual rows=102000, loops=1)
+  Filter: (status = ANY ('{paid,completed}'::text[]))
+  Rows Removed by Filter: 18000
+  Shared Hit Blocks: 1264
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+Planning Time: 10.965 ms
+Execution Time: 79.172 ms

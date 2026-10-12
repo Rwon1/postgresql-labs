@@ -1,0 +1,5 @@
+﻿table_name,rows_count
+customers,1000
+products,2000
+orders,120000
+order_items,480000

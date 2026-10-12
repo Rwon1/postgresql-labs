@@ -1,0 +1,12 @@
+D1. Эквивалентный диапазон; индексы те же
+SELECT * FROM orders WHERE order_date>=TIMESTAMP '2026-06-12' AND order_date<TIMESTAMP '2026-06-13';
+
+Seq Scan on orders (estimated rows=70, width=54) (actual rows=1500, loops=1)
+  Filter: ((order_date >= '2026-06-12 00:00:00'::timestamp without time zone) AND (order_date < '2026-06-13 00:00:00'::timestamp without time zone))
+  Rows Removed by Filter: 118500
+  Shared Hit Blocks: 1264
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+Planning Time: 2.547 ms
+Execution Time: 37.843 ms

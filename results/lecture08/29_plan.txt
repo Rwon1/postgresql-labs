@@ -1,0 +1,12 @@
+D1. DATE(order_date); новых индексов нет
+SELECT * FROM orders WHERE DATE(order_date)=DATE '2026-06-12';
+
+Seq Scan on orders (estimated rows=600, width=54) (actual rows=1500, loops=1)
+  Filter: (date(order_date) = '2026-06-12'::date)
+  Rows Removed by Filter: 118500
+  Shared Hit Blocks: 1264
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+Planning Time: 1.647 ms
+Execution Time: 34.935 ms

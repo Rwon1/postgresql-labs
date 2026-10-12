@@ -1,0 +1,5 @@
+A1. Конкретный клиент
+SELECT * FROM orders WHERE customer_id=870042;
+
+Seq Scan on orders (estimated rows=119, width=54)
+  Filter: (customer_id = 870042)

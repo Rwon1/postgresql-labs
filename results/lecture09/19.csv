@@ -1,0 +1,8 @@
+﻿stage,source_total,daily_total,category_total,days,first_day,last_day
+before,63181080000.00,63181080000.00,63181080000.00,68,2023-01-01,2026-07-16
+stage,source_total,daily_total,category_total,days,first_day,last_day
+stale,63181080005.00,63181080000.00,63181080000.00,68,2023-01-01,2026-07-16
+stage,source_total,daily_total,category_total,days,first_day,last_day
+refreshed,63181080005.00,63181080005.00,63181080005.00,68,2023-01-01,2026-07-16
+stage,source_total,daily_total,category_total,days,first_day,last_day
+restored,63181080000.00,63181080000.00,63181080000.00,68,2023-01-01,2026-07-16

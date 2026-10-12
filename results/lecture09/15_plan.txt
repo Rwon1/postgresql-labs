@@ -1,0 +1,55 @@
+План расчёта дневной выручки через VIEW
+SELECT order_date::date AS day,SUM(total) AS revenue
+FROM lecture09.v_l09_order_totals WHERE status IN ('paid','completed') GROUP BY 1;
+
+Aggregate  (estimated rows=200, actual rows=68, loops=1)
+  Shared Hit Blocks: 5362
+  Shared Read Blocks: 0
+  Temp Read Blocks: 2711
+  Temp Written Blocks: 2720
+  Subquery Scan  (estimated rows=102100, actual rows=102000, loops=1)
+    Shared Hit Blocks: 5362
+    Shared Read Blocks: 0
+    Temp Read Blocks: 2711
+    Temp Written Blocks: 2720
+    Aggregate  (estimated rows=102100, actual rows=102000, loops=1)
+      Shared Hit Blocks: 5362
+      Shared Read Blocks: 0
+      Temp Read Blocks: 2711
+      Temp Written Blocks: 2720
+      Gather Merge  (estimated rows=204200, actual rows=235518, loops=1)
+        Shared Hit Blocks: 5362
+        Shared Read Blocks: 0
+        Temp Read Blocks: 2711
+        Temp Written Blocks: 2720
+        Aggregate  (estimated rows=102100, actual rows=78506, loops=3)
+          Shared Hit Blocks: 5362
+          Shared Read Blocks: 0
+          Temp Read Blocks: 2711
+          Temp Written Blocks: 2720
+          Sort  (estimated rows=170167, actual rows=136000, loops=3)
+            Shared Hit Blocks: 5362
+            Shared Read Blocks: 0
+            Temp Read Blocks: 2711
+            Temp Written Blocks: 2720
+            Hash Join  (estimated rows=170167, actual rows=136000, loops=3)
+              Shared Hit Blocks: 5288
+              Shared Read Blocks: 0
+              Temp Read Blocks: 0
+              Temp Written Blocks: 0
+              Seq Scan order_items (estimated rows=200000, actual rows=160000, loops=3)
+                Shared Hit Blocks: 4000
+                Shared Read Blocks: 0
+                Temp Read Blocks: 0
+                Temp Written Blocks: 0
+              Hash  (estimated rows=60059, actual rows=34000, loops=3)
+                Shared Hit Blocks: 1264
+                Shared Read Blocks: 0
+                Temp Read Blocks: 0
+                Temp Written Blocks: 0
+                Seq Scan orders (estimated rows=60059, actual rows=102000, loops=1)
+                  Shared Hit Blocks: 1264
+                  Shared Read Blocks: 0
+                  Temp Read Blocks: 0
+                  Temp Written Blocks: 0
+Execution Time: 1024.788 ms

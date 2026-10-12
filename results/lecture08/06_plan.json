@@ -1,0 +1,14 @@
+{
+  "Plan": {
+    "Node Type": "Seq Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Relation Name": "orders",
+    "Alias": "orders",
+    "Startup Cost": 0.0,
+    "Total Cost": 3064.0,
+    "Plan Rows": 3613,
+    "Plan Width": 54,
+    "Filter": "((order_date >= '2026-01-01 00:00:00'::timestamp without time zone) AND (order_date < '2026-02-01 00:00:00'::timestamp without time zone))"
+  }
+}

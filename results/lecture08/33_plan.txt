@@ -1,0 +1,11 @@
+D2. Только нужные поля
+SELECT order_id,order_date FROM orders WHERE customer_id=870042;
+
+Index Only Scan using idx_l08_customer_date on orders (estimated rows=119, width=16) (actual rows=120, loops=1)
+  Index Cond: (customer_id = 870042)
+  Shared Hit Blocks: 7
+  Shared Read Blocks: 0
+  Temp Read Blocks: 0
+  Temp Written Blocks: 0
+Planning Time: 1.433 ms
+Execution Time: 0.289 ms
