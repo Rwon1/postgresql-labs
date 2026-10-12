@@ -16,12 +16,6 @@
 | 8. Индексы и EXPLAIN | [Код](sql/lecture08_egorov.sql) | [Результат](screenshots/practice-8.png) |
 | 9. VIEW и MATERIALIZED VIEW | [Код](sql/lecture09_egorov.sql) | [Результат](screenshots/practice-9.png) |
 
-SQL выполнен в PostgreSQL 16 через pgAdmin. Полные файлы запускаются по порядку;
-`READ_1`–`READ_9` содержат запросы к готовой базе.
-
 Планы и выводы: [работа 8](results/lecture08/analysis.md), [работа 9](results/lecture09/analysis.md).
 
-Работа 9 использует данные работы 8: `lecture_09_seed.sql` в материалах отсутствует.
-
-Для работы 2 путь к папке CSV задаётся в начале сеанса:
-`SET coursework.data_dir = 'C:/pg_lab/data';`.
+Работа 9 использует данные работы 8.
