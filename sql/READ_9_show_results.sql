@@ -7,22 +7,22 @@ FROM lecture09.mv_l09_daily_sales ORDER BY day LIMIT 8;
 -- 9.04. Гранулярность и общая сумма заказов
 SELECT COUNT(*) AS rows_count,COUNT(DISTINCT order_id) AS unique_orders,
        SUM(total) AS view_total,
-       (SELECT SUM(quantity*unit_price) FROM lecture08.order_items) AS source_total
+       (SELECT SUM(quantity*unit_price) FROM lecture09.order_items) AS source_total
 FROM lecture09.v_l09_order_totals;
 
 -- 9.05. Сверка одного заказа по его позициям
 SELECT v.order_id,v.total AS view_total,COUNT(*) AS positions,
        SUM(i.quantity*i.unit_price) AS source_total
 FROM lecture09.v_l09_order_totals v
-JOIN lecture08.order_items i USING(order_id)
-WHERE v.order_id=(SELECT MIN(order_id) FROM lecture08.orders)
+JOIN lecture09.order_items i USING(order_id)
+WHERE v.order_id=(SELECT MIN(order_id) FROM lecture09.orders)
 GROUP BY v.order_id,v.total;
 
 -- 9.07. Все клиенты сохранены; клиенты без состоявшихся продаж имеют нулевые показатели
 SELECT COUNT(*) AS rows_count,COUNT(DISTINCT customer_id) AS unique_customers,
        COUNT(*) FILTER (WHERE orders_count=0) AS zero_customers,
        SUM(revenue) AS revenue,
-       (SELECT COUNT(*) FROM lecture08.customers) AS source_customers
+       (SELECT COUNT(*) FROM lecture09.customers) AS source_customers
 FROM lecture09.v_l09_customer_metrics;
 
 -- 9.08. Клиенты с нулём
@@ -34,8 +34,8 @@ WITH monthly AS (
  SELECT DATE_TRUNC('month',day) AS month,SUM(revenue) AS revenue
  FROM lecture09.mv_l09_daily_sales GROUP BY 1
 )
-SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture08.orders o
-        JOIN lecture08.order_items i USING(order_id)
+SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture09.orders o
+        JOIN lecture09.order_items i USING(order_id)
         WHERE o.status IN ('paid','completed')) AS source_total,
        (SELECT SUM(total) FROM lecture09.v_l09_order_totals
         WHERE status IN ('paid','completed')) AS order_total,
@@ -48,7 +48,7 @@ SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture08.orders o
 WITH source AS (
  SELECT o.order_date::date AS day,COUNT(DISTINCT o.order_id) AS orders_count,
         SUM(i.quantity*i.unit_price) AS revenue
- FROM lecture08.orders o JOIN lecture08.order_items i USING(order_id)
+ FROM lecture09.orders o JOIN lecture09.order_items i USING(order_id)
  WHERE o.status IN ('paid','completed') GROUP BY 1
 ), daily AS (SELECT day,orders_count,revenue FROM lecture09.mv_l09_daily_sales),
 diff AS ((SELECT * FROM source EXCEPT ALL SELECT * FROM daily)

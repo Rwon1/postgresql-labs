@@ -6,14 +6,14 @@
     "Relation Name": "mv_l09_daily_sales",
     "Alias": "mv_l09_daily_sales",
     "Startup Cost": 0.0,
-    "Total Cost": 1.68,
-    "Plan Rows": 68,
-    "Plan Width": 12,
-    "Actual Startup Time": 0.021,
-    "Actual Total Time": 0.028,
-    "Actual Rows": 68,
+    "Total Cost": 27.9,
+    "Plan Rows": 1190,
+    "Plan Width": 10,
+    "Actual Startup Time": 0.034,
+    "Actual Total Time": 0.29,
+    "Actual Rows": 1190,
     "Actual Loops": 1,
-    "Shared Hit Blocks": 1,
+    "Shared Hit Blocks": 16,
     "Shared Read Blocks": 0,
     "Shared Dirtied Blocks": 0,
     "Shared Written Blocks": 0,
@@ -36,7 +36,7 @@
     "Temp Read Blocks": 0,
     "Temp Written Blocks": 0
   },
-  "Planning Time": 0.825,
+  "Planning Time": 0.875,
   "Triggers": [],
-  "Execution Time": 0.065
+  "Execution Time": 0.444
 }

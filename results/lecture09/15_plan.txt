@@ -1,55 +1,38 @@
-План расчёта дневной выручки через VIEW
-SELECT order_date::date AS day,SUM(total) AS revenue
-FROM lecture09.v_l09_order_totals WHERE status IN ('paid','completed') GROUP BY 1;
-
-Aggregate  (estimated rows=200, actual rows=68, loops=1)
-  Shared Hit Blocks: 5362
-  Shared Read Blocks: 0
-  Temp Read Blocks: 2711
-  Temp Written Blocks: 2720
-  Subquery Scan  (estimated rows=102100, actual rows=102000, loops=1)
-    Shared Hit Blocks: 5362
-    Shared Read Blocks: 0
-    Temp Read Blocks: 2711
-    Temp Written Blocks: 2720
-    Aggregate  (estimated rows=102100, actual rows=102000, loops=1)
-      Shared Hit Blocks: 5362
-      Shared Read Blocks: 0
-      Temp Read Blocks: 2711
-      Temp Written Blocks: 2720
-      Gather Merge  (estimated rows=204200, actual rows=235518, loops=1)
-        Shared Hit Blocks: 5362
-        Shared Read Blocks: 0
-        Temp Read Blocks: 2711
-        Temp Written Blocks: 2720
-        Aggregate  (estimated rows=102100, actual rows=78506, loops=3)
-          Shared Hit Blocks: 5362
-          Shared Read Blocks: 0
-          Temp Read Blocks: 2711
-          Temp Written Blocks: 2720
-          Sort  (estimated rows=170167, actual rows=136000, loops=3)
-            Shared Hit Blocks: 5362
-            Shared Read Blocks: 0
-            Temp Read Blocks: 2711
-            Temp Written Blocks: 2720
-            Hash Join  (estimated rows=170167, actual rows=136000, loops=3)
-              Shared Hit Blocks: 5288
-              Shared Read Blocks: 0
-              Temp Read Blocks: 0
-              Temp Written Blocks: 0
-              Seq Scan order_items (estimated rows=200000, actual rows=160000, loops=3)
-                Shared Hit Blocks: 4000
-                Shared Read Blocks: 0
-                Temp Read Blocks: 0
-                Temp Written Blocks: 0
-              Hash  (estimated rows=60059, actual rows=34000, loops=3)
-                Shared Hit Blocks: 1264
-                Shared Read Blocks: 0
-                Temp Read Blocks: 0
-                Temp Written Blocks: 0
-                Seq Scan orders (estimated rows=60059, actual rows=102000, loops=1)
-                  Shared Hit Blocks: 1264
-                  Shared Read Blocks: 0
-                  Temp Read Blocks: 0
-                  Temp Written Blocks: 0
-Execution Time: 1024.788 ms
+HashAggregate  (cost=77603.72..77606.72 rows=200 width=36) (actual time=582.726..594.187 rows=1190 loops=1)
+  Group Key: (v_l09_order_totals.order_date)::date
+  Batches: 1  Memory Usage: 593kB
+  Buffers: shared hit=6686, temp read=3392 written=3403
+  ->  Subquery Scan on v_l09_order_totals  (cost=38150.43..76965.70 rows=127605 width=36) (actual time=232.666..565.385 rows=127500 loops=1)
+        Buffers: shared hit=6686, temp read=3392 written=3403
+        ->  Finalize GroupAggregate  (cost=38150.43..75370.64 rows=127605 width=63) (actual time=232.658..546.374 rows=127500 loops=1)
+              Group Key: o.order_id
+              Buffers: shared hit=6686, temp read=3392 written=3403
+              ->  Gather Merge  (cost=38150.43..71861.50 rows=255210 width=63) (actual time=232.627..409.618 rows=302940 loops=1)
+                    Workers Planned: 2
+                    Workers Launched: 2
+                    Buffers: shared hit=6686, temp read=3392 written=3403
+                    ->  Partial GroupAggregate  (cost=37150.41..41403.91 rows=127605 width=63) (actual time=189.583..314.457 rows=100980 loops=3)
+                          Group Key: o.order_id
+                          Buffers: shared hit=6686, temp read=3392 written=3403
+                          ->  Sort  (cost=37150.41..37682.10 rows=212675 width=41) (actual time=189.551..213.041 rows=170000 loops=3)
+                                Sort Key: o.order_id
+                                Sort Method: external merge  Disk: 9040kB
+                                Buffers: shared hit=6686, temp read=3392 written=3403
+                                Worker 0:  Sort Method: external merge  Disk: 9032kB
+                                Worker 1:  Sort Method: external merge  Disk: 9064kB
+                                ->  Parallel Hash Join  (cost=3628.22..11785.49 rows=212675 width=41) (actual time=24.905..123.093 rows=170000 loops=3)
+                                      Hash Cond: (i.order_id = o.order_id)
+                                      Buffers: shared hit=6612
+                                      ->  Parallel Seq Scan on order_items i  (cost=0.00..7501.00 rows=250000 width=18) (actual time=0.014..17.025 rows=200000 loops=3)
+                                            Buffers: shared hit=5001
+                                      ->  Parallel Hash  (cost=2689.94..2689.94 rows=75062 width=31) (actual time=24.459..24.460 rows=42500 loops=3)
+                                            Buckets: 131072  Batches: 1  Memory Usage: 9472kB
+                                            Buffers: shared hit=1587
+                                            ->  Parallel Seq Scan on orders o  (cost=0.00..2689.94 rows=75062 width=31) (actual time=0.039..16.349 rows=63750 loops=2)
+                                                  Filter: (status = ANY ('{paid,completed}'::text[]))
+                                                  Rows Removed by Filter: 11250
+                                                  Buffers: shared hit=1587
+Planning:
+  Buffers: shared hit=295
+Planning Time: 2.062 ms
+Execution Time: 596.249 ms

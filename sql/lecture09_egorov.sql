@@ -1,16 +1,16 @@
 -- Практическая работа 9. Егоров, группа 16М-нф26.
--- lecture_09_seed.sql не предоставлен: использованы данные работы 8 (lecture08).
--- Сначала выполнить lecture08_egorov.sql. Исходные таблицы не удаляются.
+-- Исходные данные: lecture_09_seed.sql.
+-- Сначала выполнить lecture_09_seed.sql в этой же базе.
 -- VIEW хранит запрос и читает актуальные данные; MV хранит результат до REFRESH.
 -- Выручка = quantity * unit_price, статусы paid + completed; день = дата заказа.
 -- Зависимости: orders/items -> order_totals -> customer_metrics и daily_sales.
 -- orders/items/products -> daily_category. Между двумя MV зависимости нет.
 
 -- 9.01. Исходные данные
-SELECT 'customers' AS table_name,COUNT(*) AS rows_count FROM lecture08.customers
-UNION ALL SELECT 'products',COUNT(*) FROM lecture08.products
-UNION ALL SELECT 'orders',COUNT(*) FROM lecture08.orders
-UNION ALL SELECT 'order_items',COUNT(*) FROM lecture08.order_items;
+SELECT 'customers' AS table_name,COUNT(*) AS rows_count FROM lecture09.customers
+UNION ALL SELECT 'products',COUNT(*) FROM lecture09.products
+UNION ALL SELECT 'orders',COUNT(*) FROM lecture09.orders
+UNION ALL SELECT 'order_items',COUNT(*) FROM lecture09.order_items;
 
 -- 9.02. Объекты работы: удаление в порядке зависимостей
 CREATE SCHEMA IF NOT EXISTS lecture09;
@@ -23,28 +23,28 @@ DROP VIEW IF EXISTS lecture09.v_l09_order_totals;
 CREATE VIEW lecture09.v_l09_order_totals AS
 SELECT o.order_id,o.customer_id,o.order_date,o.status,
        SUM(i.quantity*i.unit_price) AS total
-FROM lecture08.orders o JOIN lecture08.order_items i USING(order_id)
+FROM lecture09.orders o JOIN lecture09.order_items i USING(order_id)
 GROUP BY o.order_id,o.customer_id,o.order_date,o.status;
 
 -- 9.04. Гранулярность и общая сумма заказов
 SELECT COUNT(*) AS rows_count,COUNT(DISTINCT order_id) AS unique_orders,
        SUM(total) AS view_total,
-       (SELECT SUM(quantity*unit_price) FROM lecture08.order_items) AS source_total
+       (SELECT SUM(quantity*unit_price) FROM lecture09.order_items) AS source_total
 FROM lecture09.v_l09_order_totals;
 
 -- 9.05. Сверка одного заказа по его позициям
 SELECT v.order_id,v.total AS view_total,COUNT(*) AS positions,
        SUM(i.quantity*i.unit_price) AS source_total
 FROM lecture09.v_l09_order_totals v
-JOIN lecture08.order_items i USING(order_id)
-WHERE v.order_id=(SELECT MIN(order_id) FROM lecture08.orders)
+JOIN lecture09.order_items i USING(order_id)
+WHERE v.order_id=(SELECT MIN(order_id) FROM lecture09.orders)
 GROUP BY v.order_id,v.total;
 
 -- 9.06. Одна строка означает клиента. Фильтр в ON сохраняет клиентов без продаж
 CREATE VIEW lecture09.v_l09_customer_metrics AS
 SELECT c.customer_id,c.full_name,COUNT(v.order_id) AS orders_count,
        COALESCE(SUM(v.total),0) AS revenue
-FROM lecture08.customers c
+FROM lecture09.customers c
 LEFT JOIN lecture09.v_l09_order_totals v
   ON v.customer_id=c.customer_id AND v.status IN ('paid','completed')
 GROUP BY c.customer_id,c.full_name;
@@ -53,7 +53,7 @@ GROUP BY c.customer_id,c.full_name;
 SELECT COUNT(*) AS rows_count,COUNT(DISTINCT customer_id) AS unique_customers,
        COUNT(*) FILTER (WHERE orders_count=0) AS zero_customers,
        SUM(revenue) AS revenue,
-       (SELECT COUNT(*) FROM lecture08.customers) AS source_customers
+       (SELECT COUNT(*) FROM lecture09.customers) AS source_customers
 FROM lecture09.v_l09_customer_metrics;
 
 -- 9.08. Клиенты с нулём
@@ -73,9 +73,9 @@ CREATE MATERIALIZED VIEW lecture09.mv_l09_daily_category AS
 SELECT o.order_date::date AS day,p.category,
        COUNT(DISTINCT o.order_id) AS orders_count,SUM(i.quantity) AS units,
        SUM(i.quantity*i.unit_price) AS revenue
-FROM lecture08.orders o
-JOIN lecture08.order_items i USING(order_id)
-JOIN lecture08.products p USING(product_id)
+FROM lecture09.orders o
+JOIN lecture09.order_items i USING(order_id)
+JOIN lecture09.products p USING(product_id)
 WHERE o.status IN ('paid','completed') GROUP BY 1,2;
 CREATE UNIQUE INDEX ux_l09_daily_category ON lecture09.mv_l09_daily_category(day,category);
 
@@ -91,8 +91,8 @@ WITH monthly AS (
  SELECT DATE_TRUNC('month',day) AS month,SUM(revenue) AS revenue
  FROM lecture09.mv_l09_daily_sales GROUP BY 1
 )
-SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture08.orders o
-        JOIN lecture08.order_items i USING(order_id)
+SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture09.orders o
+        JOIN lecture09.order_items i USING(order_id)
         WHERE o.status IN ('paid','completed')) AS source_total,
        (SELECT SUM(total) FROM lecture09.v_l09_order_totals
         WHERE status IN ('paid','completed')) AS order_total,
@@ -105,7 +105,7 @@ SELECT (SELECT SUM(i.quantity*i.unit_price) FROM lecture08.orders o
 WITH source AS (
  SELECT o.order_date::date AS day,COUNT(DISTINCT o.order_id) AS orders_count,
         SUM(i.quantity*i.unit_price) AS revenue
- FROM lecture08.orders o JOIN lecture08.order_items i USING(order_id)
+ FROM lecture09.orders o JOIN lecture09.order_items i USING(order_id)
  WHERE o.status IN ('paid','completed') GROUP BY 1
 ), daily AS (SELECT day,orders_count,revenue FROM lecture09.mv_l09_daily_sales),
 diff AS ((SELECT * FROM source EXCEPT ALL SELECT * FROM daily)
@@ -154,10 +154,10 @@ SELECT 'before' AS stage,
  (SELECT COUNT(*) FROM lecture09.mv_l09_daily_sales) AS days,
  (SELECT MIN(day) FROM lecture09.mv_l09_daily_sales) AS first_day,
  (SELECT MAX(day) FROM lecture09.mv_l09_daily_sales) AS last_day;
-UPDATE lecture08.order_items SET unit_price=unit_price+1
+UPDATE lecture09.order_items SET unit_price=unit_price+1
 WHERE order_item_id=(
- SELECT MIN(i.order_item_id) FROM lecture08.order_items i
- JOIN lecture08.orders o USING(order_id) WHERE o.status IN ('paid','completed'));
+ SELECT MIN(i.order_item_id) FROM lecture09.order_items i
+ JOIN lecture09.orders o USING(order_id) WHERE o.status IN ('paid','completed'));
 SELECT 'stale' AS stage,
  (SELECT SUM(total) FROM lecture09.v_l09_order_totals WHERE status IN ('paid','completed')) AS source_total,
  (SELECT SUM(revenue) FROM lecture09.mv_l09_daily_sales) AS daily_total,

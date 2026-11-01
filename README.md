@@ -14,8 +14,8 @@
 | 6. Подзапросы и CTE | [Код](sql/lecture06_egorov.sql) | [Результат](screenshots/practice-6.png) |
 | 7. Оконные функции | [Код](sql/lecture07_egorov.sql) | [Результат](screenshots/practice-7.png) |
 | 8. Индексы и EXPLAIN | [Код](sql/lecture08_egorov.sql) | [Результат](screenshots/practice-8.png) |
-| 9. VIEW и MATERIALIZED VIEW | [Код](sql/lecture09_egorov.sql) | [Результат](screenshots/practice-9.png) |
+| 9. VIEW и MATERIALIZED VIEW | [Код](sql/lecture09_egorov.sql) | [Результат](screenshots/practice-9.jpg) |
 
 Планы и выводы: [работа 8](results/lecture08/analysis.md), [работа 9](results/lecture09/analysis.md).
 
-Работа 9 использует данные работы 8.
+Работа 9: сначала выполнить [lecture_09_seed.sql](sql/lecture_09_seed.sql), затем основной SQL.
