@@ -1,0 +1,3 @@
+﻿conname,contype,definition
+l12_order_items_order_id_order_date_fkey,f,"FOREIGN KEY (order_id, order_date) REFERENCES l12_orders(order_id, order_date)"
+l12_orders_pkey,p,"PRIMARY KEY (order_id, order_date)"

@@ -1,0 +1,10 @@
+EXPLAIN (ANALYZE, BUFFERS) SELECT * FROM l12_orders WHERE customer_id=1200002 AND order_date >= DATE '2025-01-01' AND order_date < DATE '2025-02-01';
+
+Seq Scan on l12_orders_2025_01 l12_orders  (cost=0.00..5.78 rows=2 width=30) (actual time=0.012..0.028 rows=2 loops=1)
+  Filter: ((order_date >= '2025-01-01'::date) AND (order_date < '2025-02-01'::date) AND (customer_id = 1200002))
+  Rows Removed by Filter: 214
+  Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=263
+Planning Time: 0.917 ms
+Execution Time: 0.045 ms

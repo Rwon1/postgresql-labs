@@ -1,0 +1,15 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Bitmap Heap Scan: cost=8.29..36.05; estimated rows=30; actual=0.038..0.064 ms; rows=30; loops=1
+  Relation Name: l11_orders
+  Recheck Cond: (status = 'failed'::text)
+  Exact Heap Blocks: 12
+  Lossy Heap Blocks: 0
+  Buffers: shared hit=13; read=0; dirtied=0; written=0; temp read=0; written=0
+  Bitmap Index Scan: cost=0.0..8.29; estimated rows=30; actual=0.027..0.027 ms; rows=30; loops=1
+    Index Name: l11_orders_failed_idx
+    Buffers: shared hit=1; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.14 ms
+Execution Time: 0.108 ms
+Settings: {"search_path": "public"}

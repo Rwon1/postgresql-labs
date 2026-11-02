@@ -1,0 +1,11 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Seq Scan: cost=0.0..41.0; estimated rows=6; actual=0.033..0.187 ms; rows=6; loops=1
+  Relation Name: l11_orders
+  Filter: (customer_id = 110001)
+  Rows Removed by Filter: 1194
+  Buffers: shared hit=26; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.092 ms
+Execution Time: 0.204 ms
+Settings: {"search_path": "public"}

@@ -1,0 +1,24 @@
+Прямой INSERT без перехвата; ON_ERROR_STOP=0 нужен для явного ROLLBACK.
+
+\set VERBOSITY verbose
+BEGIN;
+INSERT INTO l12_orders(order_id,order_date,customer_id,status,amount)
+VALUES (1299001,DATE '2026-02-10',1200002,'new',100);
+ROLLBACK;
+SELECT count(*) AS final_orders FROM l12_orders;
+
+STDOUT:
+BEGIN
+ROLLBACK
+ final_orders 
+--------------
+         2400
+(1 row)
+
+
+STDERR:
+psql:direct_missing_partition.sql:4: ERROR:  23514: no partition of relation "l12_orders" found for row
+DETAIL:  Partition key of the failing row contains (order_date) = (2026-02-10).
+SCHEMA NAME:  public
+TABLE NAME:  l12_orders
+LOCATION:  ExecFindPartition, execPartition.c:335

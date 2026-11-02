@@ -1,0 +1,3 @@
+﻿order_id,order_date,customer_id,status,amount
+1220001,2025-01-02,1200002,paid,537.0
+1222201,2025-01-12,1200002,paid,2979.0

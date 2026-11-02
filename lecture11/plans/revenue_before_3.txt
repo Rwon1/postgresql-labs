@@ -1,0 +1,24 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Hashed Aggregate: cost=157.48..159.98; estimated rows=200; actual=1.998..2.037 ms; rows=200; loops=1
+  Group Key: ['o.customer_id']
+  Peak Memory Usage: 160
+  Buffers: shared hit=49; read=0; dirtied=0; written=0; temp read=0; written=0
+  Hash Join: cost=53.0..121.48; estimated rows=3600; actual=0.141..0.94 ms; rows=3600; loops=1
+    Join Type: Inner
+    Hash Cond: (i.order_id = o.order_id)
+    Buffers: shared hit=49; read=0; dirtied=0; written=0; temp read=0; written=0
+    Seq Scan: cost=0.0..59.0; estimated rows=3600; actual=0.005..0.182 ms; rows=3600; loops=1
+      Relation Name: l11_order_items
+      Buffers: shared hit=23; read=0; dirtied=0; written=0; temp read=0; written=0
+    Hash: cost=38.0..38.0; estimated rows=1200; actual=0.134..0.134 ms; rows=1200; loops=1
+      Peak Memory Usage: 63
+      Hash Batches: 1
+      Buffers: shared hit=26; read=0; dirtied=0; written=0; temp read=0; written=0
+      Seq Scan: cost=0.0..38.0; estimated rows=1200; actual=0.004..0.074 ms; rows=1200; loops=1
+        Relation Name: l11_orders
+        Buffers: shared hit=26; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.084 ms
+Execution Time: 2.062 ms
+Settings: {"search_path": "public"}

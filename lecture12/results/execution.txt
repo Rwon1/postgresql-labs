@@ -1,0 +1,334 @@
+SET
+SET
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+DO
+CREATE TABLE
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+CREATE INDEX
+CREATE INDEX
+COMMIT
+ANALYZE
+ANALYZE
+ANALYZE
+ANALYZE
+ table_name  | rows_count 
+-------------+------------
+ customers   |        200
+ products    |        250
+ orders      |       2400
+ order_items |       7200
+(4 rows)
+
+   partition_name   
+--------------------
+ l12_orders_2025_01
+ l12_orders_2025_02
+ l12_orders_2025_03
+ l12_orders_2025_04
+ l12_orders_2025_05
+ l12_orders_2025_06
+ l12_orders_2025_07
+ l12_orders_2025_08
+ l12_orders_2025_09
+ l12_orders_2025_10
+ l12_orders_2025_11
+ l12_orders_2025_12
+(12 rows)
+
+                                                           QUERY PLAN                                                            
+---------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=5.80..5.81 rows=1 width=8) (actual time=0.095..0.095 rows=1 loops=1)
+   Buffers: shared hit=2
+   ->  Seq Scan on l12_orders_2025_05 l12_orders  (cost=0.00..5.25 rows=217 width=0) (actual time=0.020..0.065 rows=217 loops=1)
+         Filter: ((order_date >= '2025-05-01'::date) AND (order_date < '2025-06-01'::date))
+         Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=27
+ Planning Time: 0.363 ms
+ Execution Time: 0.115 ms
+(9 rows)
+
+      stage       
+------------------
+ after_first_seed
+(1 row)
+
+ table_name  | rows_count 
+-------------+------------
+ customers   |        200
+ products    |        250
+ orders      |       2400
+ order_items |       7200
+ partitions  |         12
+(5 rows)
+
+BEGIN
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+DO
+CREATE TABLE
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+INSERT 0 0
+CREATE INDEX
+CREATE INDEX
+COMMIT
+ANALYZE
+ANALYZE
+ANALYZE
+ANALYZE
+ table_name  | rows_count 
+-------------+------------
+ customers   |        200
+ products    |        250
+ orders      |       2400
+ order_items |       7200
+(4 rows)
+
+   partition_name   
+--------------------
+ l12_orders_2025_01
+ l12_orders_2025_02
+ l12_orders_2025_03
+ l12_orders_2025_04
+ l12_orders_2025_05
+ l12_orders_2025_06
+ l12_orders_2025_07
+ l12_orders_2025_08
+ l12_orders_2025_09
+ l12_orders_2025_10
+ l12_orders_2025_11
+ l12_orders_2025_12
+(12 rows)
+
+                                                           QUERY PLAN                                                            
+---------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=5.80..5.81 rows=1 width=8) (actual time=0.055..0.055 rows=1 loops=1)
+   Buffers: shared hit=2
+   ->  Seq Scan on l12_orders_2025_05 l12_orders  (cost=0.00..5.25 rows=217 width=0) (actual time=0.014..0.039 rows=217 loops=1)
+         Filter: ((order_date >= '2025-05-01'::date) AND (order_date < '2025-06-01'::date))
+         Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=7
+ Planning Time: 0.178 ms
+ Execution Time: 0.150 ms
+(9 rows)
+
+       stage       
+-------------------
+ after_second_seed
+(1 row)
+
+ table_name  | rows_count 
+-------------+------------
+ customers   |        200
+ products    |        250
+ orders      |       2400
+ order_items |       7200
+ partitions  |         12
+(5 rows)
+
+   partition_name   |                      bounds                      | rows_count |  min_date  |  max_date  
+--------------------+--------------------------------------------------+------------+------------+------------
+ l12_orders_2025_01 | FOR VALUES FROM ('2025-01-01') TO ('2025-02-01') |        216 | 2025-01-01 | 2025-01-31
+ l12_orders_2025_02 | FOR VALUES FROM ('2025-02-01') TO ('2025-03-01') |        196 | 2025-02-01 | 2025-02-28
+ l12_orders_2025_03 | FOR VALUES FROM ('2025-03-01') TO ('2025-04-01') |        217 | 2025-03-01 | 2025-03-31
+ l12_orders_2025_04 | FOR VALUES FROM ('2025-04-01') TO ('2025-05-01') |        210 | 2025-04-01 | 2025-04-30
+ l12_orders_2025_05 | FOR VALUES FROM ('2025-05-01') TO ('2025-06-01') |        217 | 2025-05-01 | 2025-05-31
+ l12_orders_2025_06 | FOR VALUES FROM ('2025-06-01') TO ('2025-07-01') |        210 | 2025-06-01 | 2025-06-30
+ l12_orders_2025_07 | FOR VALUES FROM ('2025-07-01') TO ('2025-08-01') |        216 | 2025-07-01 | 2025-07-31
+ l12_orders_2025_08 | FOR VALUES FROM ('2025-08-01') TO ('2025-09-01') |        186 | 2025-08-01 | 2025-08-31
+ l12_orders_2025_09 | FOR VALUES FROM ('2025-09-01') TO ('2025-10-01') |        180 | 2025-09-01 | 2025-09-30
+ l12_orders_2025_10 | FOR VALUES FROM ('2025-10-01') TO ('2025-11-01') |        186 | 2025-10-01 | 2025-10-31
+ l12_orders_2025_11 | FOR VALUES FROM ('2025-11-01') TO ('2025-12-01') |        180 | 2025-11-01 | 2025-11-30
+ l12_orders_2025_12 | FOR VALUES FROM ('2025-12-01') TO ('2026-01-01') |        186 | 2025-12-01 | 2025-12-31
+(12 rows)
+
+                 conname                  | contype |                                   definition                                   
+------------------------------------------+---------+--------------------------------------------------------------------------------
+ l12_order_items_order_id_order_date_fkey | f       | FOREIGN KEY (order_id, order_date) REFERENCES l12_orders(order_id, order_date)
+ l12_orders_pkey                          | p       | PRIMARY KEY (order_id, order_date)
+(2 rows)
+
+                                                                QUERY PLAN                                                                
+------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=66.00..66.01 rows=1 width=8) (actual time=0.383..0.385 rows=1 loops=1)
+   Buffers: shared hit=24
+   ->  Append  (cost=0.00..60.00 rows=2400 width=0) (actual time=0.012..0.295 rows=2400 loops=1)
+         Buffers: shared hit=24
+         ->  Seq Scan on l12_orders_2025_01 l12_orders_1  (cost=0.00..4.16 rows=216 width=0) (actual time=0.011..0.033 rows=216 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_02 l12_orders_2  (cost=0.00..3.96 rows=196 width=0) (actual time=0.005..0.014 rows=196 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_03 l12_orders_3  (cost=0.00..4.17 rows=217 width=0) (actual time=0.005..0.015 rows=217 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_04 l12_orders_4  (cost=0.00..4.10 rows=210 width=0) (actual time=0.005..0.014 rows=210 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_05 l12_orders_5  (cost=0.00..4.17 rows=217 width=0) (actual time=0.004..0.013 rows=217 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_06 l12_orders_6  (cost=0.00..4.10 rows=210 width=0) (actual time=0.006..0.015 rows=210 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_07 l12_orders_7  (cost=0.00..4.16 rows=216 width=0) (actual time=0.004..0.014 rows=216 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_08 l12_orders_8  (cost=0.00..3.86 rows=186 width=0) (actual time=0.004..0.012 rows=186 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_09 l12_orders_9  (cost=0.00..3.80 rows=180 width=0) (actual time=0.005..0.015 rows=180 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_10 l12_orders_10  (cost=0.00..3.86 rows=186 width=0) (actual time=0.004..0.012 rows=186 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_11 l12_orders_11  (cost=0.00..3.80 rows=180 width=0) (actual time=0.004..0.017 rows=180 loops=1)
+               Buffers: shared hit=2
+         ->  Seq Scan on l12_orders_2025_12 l12_orders_12  (cost=0.00..3.86 rows=186 width=0) (actual time=0.004..0.012 rows=186 loops=1)
+               Buffers: shared hit=2
+ Planning Time: 0.274 ms
+ Execution Time: 0.411 ms
+(30 rows)
+
+                                                           QUERY PLAN                                                            
+---------------------------------------------------------------------------------------------------------------------------------
+ Aggregate  (cost=5.80..5.81 rows=1 width=8) (actual time=0.141..0.142 rows=1 loops=1)
+   Buffers: shared hit=2
+   ->  Seq Scan on l12_orders_2025_05 l12_orders  (cost=0.00..5.25 rows=217 width=0) (actual time=0.044..0.107 rows=217 loops=1)
+         Filter: ((order_date >= '2025-05-01'::date) AND (order_date < '2025-06-01'::date))
+         Buffers: shared hit=2
+ Planning Time: 0.286 ms
+ Execution Time: 0.181 ms
+(7 rows)
+
+                  index_name                   | indisvalid | indisready |                                                          definition                                                           
+-----------------------------------------------+------------+------------+-------------------------------------------------------------------------------------------------------------------------------
+ l12_orders_2025_01_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_01_customer_id_order_date_idx ON public.l12_orders_2025_01 USING btree (customer_id, order_date)
+ l12_orders_2025_02_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_02_customer_id_order_date_idx ON public.l12_orders_2025_02 USING btree (customer_id, order_date)
+ l12_orders_2025_03_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_03_customer_id_order_date_idx ON public.l12_orders_2025_03 USING btree (customer_id, order_date)
+ l12_orders_2025_04_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_04_customer_id_order_date_idx ON public.l12_orders_2025_04 USING btree (customer_id, order_date)
+ l12_orders_2025_05_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_05_customer_id_order_date_idx ON public.l12_orders_2025_05 USING btree (customer_id, order_date)
+ l12_orders_2025_06_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_06_customer_id_order_date_idx ON public.l12_orders_2025_06 USING btree (customer_id, order_date)
+ l12_orders_2025_07_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_07_customer_id_order_date_idx ON public.l12_orders_2025_07 USING btree (customer_id, order_date)
+ l12_orders_2025_08_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_08_customer_id_order_date_idx ON public.l12_orders_2025_08 USING btree (customer_id, order_date)
+ l12_orders_2025_09_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_09_customer_id_order_date_idx ON public.l12_orders_2025_09 USING btree (customer_id, order_date)
+ l12_orders_2025_10_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_10_customer_id_order_date_idx ON public.l12_orders_2025_10 USING btree (customer_id, order_date)
+ l12_orders_2025_11_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_11_customer_id_order_date_idx ON public.l12_orders_2025_11 USING btree (customer_id, order_date)
+ l12_orders_2025_12_customer_id_order_date_idx | t          | t          | CREATE INDEX l12_orders_2025_12_customer_id_order_date_idx ON public.l12_orders_2025_12 USING btree (customer_id, order_date)
+ l12_orders_customer_date_idx                  | t          | t          | CREATE INDEX l12_orders_customer_date_idx ON ONLY public.l12_orders USING btree (customer_id, order_date)
+(13 rows)
+
+ order_id | order_date | customer_id | status | amount  
+----------+------------+-------------+--------+---------
+  1220001 | 2025-01-02 |     1200002 | paid   |  537.00
+  1222201 | 2025-01-12 |     1200002 | paid   | 2979.00
+(2 rows)
+
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Seq Scan on l12_orders_2025_01 l12_orders  (cost=0.00..5.78 rows=2 width=30) (actual time=0.064..0.096 rows=2 loops=1)
+   Filter: ((order_date >= '2025-01-01'::date) AND (order_date < '2025-02-01'::date) AND (customer_id = 1200002))
+   Rows Removed by Filter: 214
+   Buffers: shared hit=2
+ Planning Time: 0.234 ms
+ Execution Time: 0.110 ms
+(6 rows)
+
+   month    | paid_orders | paid_items | orders_revenue | items_revenue | difference 
+------------+-------------+------------+----------------+---------------+------------
+ 2025-01-01 |         132 |        396 |      303207.00 |     506856.00 |  203649.00
+ 2025-02-01 |         119 |        357 |      248607.00 |     467084.00 |  218477.00
+ 2025-03-01 |         126 |        378 |      299319.00 |     486270.00 |  186951.00
+ 2025-04-01 |         126 |        378 |      302797.00 |     488340.00 |  185543.00
+ 2025-05-01 |         133 |        399 |      280508.00 |     507526.00 |  227018.00
+ 2025-06-01 |         126 |        378 |      285222.00 |     490090.00 |  204868.00
+ 2025-07-01 |         132 |        396 |      325777.00 |     508264.00 |  182487.00
+ 2025-08-01 |         114 |        342 |      229087.00 |     444010.00 |  214923.00
+ 2025-09-01 |         108 |        324 |      254244.00 |     416996.00 |  162752.00
+ 2025-10-01 |         108 |        324 |      262865.00 |     418384.00 |  155519.00
+ 2025-11-01 |         108 |        324 |      224829.00 |     416996.00 |  192167.00
+ 2025-12-01 |         108 |        324 |      244217.00 |     418384.00 |  174167.00
+(12 rows)
+
+ paid_orders | orders_revenue | paid_items | items_revenue | difference 
+-------------+----------------+------------+---------------+------------
+        1440 |     3260679.00 |       4320 |    5569200.00 | 2308521.00
+(1 row)
+
+ joined_items | distinct_items | source_items | no_multiplication 
+--------------+----------------+--------------+-------------------
+         7200 |           7200 |         7200 | t
+(1 row)
+
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ order_id | order_date |   partition_name   
+----------+------------+--------------------
+  1299000 | 2026-01-15 | l12_orders_2026_01
+(1 row)
+
+ROLLBACK
+BEGIN
+CREATE TABLE
+DO
+ sqlstate |                       message                       |                                 detail                                 
+----------+-----------------------------------------------------+------------------------------------------------------------------------
+ 23514    | no partition of relation "l12_orders" found for row | Partition key of the failing row contains (order_date) = (2026-02-10).
+(1 row)
+
+ROLLBACK
+ table_name  | rows_count 
+-------------+------------
+ customers   |        200
+ products    |        250
+ orders      |       2400
+ order_items |       7200
+ partitions  |         12
+(5 rows)
+
+ january_rolled_back | no_test_orders 
+---------------------+----------------
+ t                   | t
+(1 row)
+
+
+STDERR (уведомления повторного seed):
+psql:lecture12_Egorov.sql:8: NOTICE:  relation "l12_customers" already exists, skipping
+psql:lecture12_Egorov.sql:9: NOTICE:  relation "l12_products" already exists, skipping
+psql:lecture12_Egorov.sql:14: NOTICE:  relation "l12_orders" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_01" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_02" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_03" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_04" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_05" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_06" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_07" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_08" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_09" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_10" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_11" already exists, skipping
+psql:lecture12_Egorov.sql:21: NOTICE:  relation "l12_orders_2025_12" already exists, skipping
+psql:lecture12_Egorov.sql:27: NOTICE:  relation "l12_order_items" already exists, skipping
+psql:lecture12_Egorov.sql:43: NOTICE:  relation "l12_orders_customer_date_idx" already exists, skipping
+psql:lecture12_Egorov.sql:44: NOTICE:  relation "l12_items_order_date_idx" already exists, skipping
+psql:lecture12_Egorov.sql:68: NOTICE:  relation "l12_customers" already exists, skipping
+psql:lecture12_Egorov.sql:69: NOTICE:  relation "l12_products" already exists, skipping
+psql:lecture12_Egorov.sql:74: NOTICE:  relation "l12_orders" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_01" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_02" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_03" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_04" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_05" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_06" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_07" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_08" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_09" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_10" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_11" already exists, skipping
+psql:lecture12_Egorov.sql:81: NOTICE:  relation "l12_orders_2025_12" already exists, skipping
+psql:lecture12_Egorov.sql:87: NOTICE:  relation "l12_order_items" already exists, skipping
+psql:lecture12_Egorov.sql:103: NOTICE:  relation "l12_orders_customer_date_idx" already exists, skipping
+psql:lecture12_Egorov.sql:104: NOTICE:  relation "l12_items_order_date_idx" already exists, skipping

@@ -1,0 +1,9 @@
+BEGIN
+CREATE TABLE
+INSERT 0 1
+ order_id | order_date |   partition_name   
+----------+------------+--------------------
+  1299000 | 2026-01-15 | l12_orders_2026_01
+(1 row)
+
+ROLLBACK

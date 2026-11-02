@@ -1,0 +1,11 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Seq Scan: cost=0.0..41.0; estimated rows=30; actual=0.009..0.076 ms; rows=30; loops=1
+  Relation Name: l11_orders
+  Filter: (status = 'failed'::text)
+  Rows Removed by Filter: 1170
+  Buffers: shared hit=26; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.036 ms
+Execution Time: 0.084 ms
+Settings: {"search_path": "public"}

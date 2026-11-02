@@ -1,0 +1,16 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Bitmap Heap Scan: cost=4.32..19.75; estimated rows=6; actual=0.012..0.017 ms; rows=6; loops=1
+  Relation Name: l11_orders
+  Recheck Cond: (customer_id = 110001)
+  Exact Heap Blocks: 6
+  Lossy Heap Blocks: 0
+  Buffers: shared hit=8; read=0; dirtied=0; written=0; temp read=0; written=0
+  Bitmap Index Scan: cost=0.0..4.32; estimated rows=6; actual=0.008..0.009 ms; rows=6; loops=1
+    Index Name: l11_orders_customer_idx
+    Index Cond: (customer_id = 110001)
+    Buffers: shared hit=2; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.068 ms
+Execution Time: 0.036 ms
+Settings: {"search_path": "public"}

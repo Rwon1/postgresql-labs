@@ -1,0 +1,30 @@
+Читаемая расшифровка исходного EXPLAIN FORMAT JSON; не отдельный EXPLAIN TEXT.
+Все значения ниже получены из того же выполнения, что в соседнем .json.
+
+Hashed Aggregate: cost=184.16..186.66; estimated rows=200; actual=1.795..1.837 ms; rows=200; loops=1
+  Group Key: ['o.customer_id']
+  Peak Memory Usage: 160
+  Buffers: shared hit=49; read=0; dirtied=0; written=0; temp read=0; written=0
+  Hash Join: cost=137.0..178.16; estimated rows=1200; actual=1.293..1.552 ms; rows=1200; loops=1
+    Join Type: Inner
+    Hash Cond: (o.order_id = s.order_id)
+    Buffers: shared hit=49; read=0; dirtied=0; written=0; temp read=0; written=0
+    Seq Scan: cost=0.0..38.0; estimated rows=1200; actual=0.009..0.074 ms; rows=1200; loops=1
+      Relation Name: l11_orders
+      Buffers: shared hit=26; read=0; dirtied=0; written=0; temp read=0; written=0
+    Hash: cost=122.0..122.0; estimated rows=1200; actual=1.276..1.276 ms; rows=1200; loops=1
+      Peak Memory Usage: 71
+      Hash Batches: 1
+      Buffers: shared hit=23; read=0; dirtied=0; written=0; temp read=0; written=0
+      Subquery Scan: cost=95.0..122.0; estimated rows=1200; actual=0.957..1.188 ms; rows=1200; loops=1
+        Buffers: shared hit=23; read=0; dirtied=0; written=0; temp read=0; written=0
+        Hashed Aggregate: cost=95.0..110.0; estimated rows=1200; actual=0.957..1.126 ms; rows=1200; loops=1
+          Group Key: ['l11_order_items.order_id']
+          Peak Memory Usage: 577
+          Buffers: shared hit=23; read=0; dirtied=0; written=0; temp read=0; written=0
+          Seq Scan: cost=0.0..59.0; estimated rows=3600; actual=0.003..0.131 ms; rows=3600; loops=1
+            Relation Name: l11_order_items
+            Buffers: shared hit=23; read=0; dirtied=0; written=0; temp read=0; written=0
+Planning Time: 0.1 ms
+Execution Time: 1.958 ms
+Settings: {"search_path": "public"}

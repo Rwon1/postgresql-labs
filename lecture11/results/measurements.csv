@@ -1,0 +1,31 @@
+﻿query,phase,run,plan,planning_ms,execution_ms,root_actual_start_ms,root_actual_total_ms,estimated_rows,actual_rows,loops,shared_hit,shared_read,temp_read,temp_written,source
+customer,before,1,Seq Scan,0.092,0.204,0.033,0.187,6,6,1,26,0,0,0,plans/customer_before_1.json
+customer,before,2,Seq Scan,0.036,0.072,0.011,0.065,6,6,1,26,0,0,0,plans/customer_before_2.json
+customer,before,3,Seq Scan,0.043,0.091,0.015,0.083,6,6,1,26,0,0,0,plans/customer_before_3.json
+customer,after,1,Bitmap Heap Scan → Bitmap Index Scan,0.068,0.036,0.012,0.017,6,6,1,8,0,0,0,plans/customer_after_1.json
+customer,after,2,Bitmap Heap Scan → Bitmap Index Scan,0.174,0.117,0.034,0.046,6,6,1,8,0,0,0,plans/customer_after_2.json
+customer,after,3,Bitmap Heap Scan → Bitmap Index Scan,0.09,0.048,0.018,0.024,6,6,1,8,0,0,0,plans/customer_after_3.json
+last20,before,1,Limit → Sort → Seq Scan,0.268,0.81,0.75,0.757,20,20,1,26,0,0,0,plans/last20_before_1.json
+last20,before,2,Limit → Sort → Seq Scan,0.272,2.197,2.109,2.128,20,20,1,26,0,0,0,plans/last20_before_2.json
+last20,before,3,Limit → Sort → Seq Scan,0.194,1.006,0.959,0.968,20,20,1,26,0,0,0,plans/last20_before_3.json
+last20,after,1,Limit → Index Scan,0.051,0.026,0.009,0.016,20,20,1,22,0,0,0,plans/last20_after_1.json
+last20,after,2,Limit → Index Scan,0.058,0.03,0.01,0.02,20,20,1,22,0,0,0,plans/last20_after_2.json
+last20,after,3,Limit → Index Scan,0.043,0.021,0.008,0.014,20,20,1,22,0,0,0,plans/last20_after_3.json
+revenue,before,1,Hashed Aggregate → Hash Join → Seq Scan → Hash → Seq Scan,0.142,2.138,2.066,2.092,200,200,1,49,0,0,0,plans/revenue_before_1.json
+revenue,before,2,Hashed Aggregate → Hash Join → Seq Scan → Hash → Seq Scan,0.127,1.65,1.603,1.626,200,200,1,49,0,0,0,plans/revenue_before_2.json
+revenue,before,3,Hashed Aggregate → Hash Join → Seq Scan → Hash → Seq Scan,0.084,2.062,1.998,2.037,200,200,1,49,0,0,0,plans/revenue_before_3.json
+revenue,after,1,Hashed Aggregate → Hash Join → Seq Scan → Hash → Subquery Scan → Hashed Aggregate → Seq Scan,0.1,1.958,1.795,1.837,200,200,1,49,0,0,0,plans/revenue_after_1.json
+revenue,after,2,Hashed Aggregate → Hash Join → Seq Scan → Hash → Subquery Scan → Hashed Aggregate → Seq Scan,0.111,2.614,2.457,2.494,200,200,1,49,0,0,0,plans/revenue_after_2.json
+revenue,after,3,Hashed Aggregate → Hash Join → Seq Scan → Hash → Subquery Scan → Hashed Aggregate → Seq Scan,0.146,3.667,3.494,3.525,200,200,1,49,0,0,0,plans/revenue_after_3.json
+failed,before,1,Seq Scan,0.078,0.21,0.018,0.193,30,30,1,26,0,0,0,plans/failed_before_1.json
+failed,before,2,Seq Scan,0.036,0.084,0.009,0.076,30,30,1,26,0,0,0,plans/failed_before_2.json
+failed,before,3,Seq Scan,0.028,0.069,0.006,0.064,30,30,1,26,0,0,0,plans/failed_before_3.json
+paid,before,1,Seq Scan,0.043,0.142,0.01,0.109,840,840,1,26,0,0,0,plans/paid_before_1.json
+paid,before,2,Seq Scan,0.034,0.127,0.009,0.098,840,840,1,26,0,0,0,plans/paid_before_2.json
+paid,before,3,Seq Scan,0.041,0.161,0.011,0.123,840,840,1,26,0,0,0,plans/paid_before_3.json
+failed,after,1,Bitmap Heap Scan → Bitmap Index Scan,0.135,0.093,0.027,0.05,30,30,1,13,0,0,0,plans/failed_after_1.json
+failed,after,2,Bitmap Heap Scan → Bitmap Index Scan,0.14,0.108,0.038,0.064,30,30,1,13,0,0,0,plans/failed_after_2.json
+failed,after,3,Bitmap Heap Scan → Bitmap Index Scan,0.116,0.073,0.019,0.039,30,30,1,13,0,0,0,plans/failed_after_3.json
+paid,after,1,Seq Scan,0.091,0.27,0.017,0.208,840,840,1,26,0,0,0,plans/paid_after_1.json
+paid,after,2,Seq Scan,0.204,0.237,0.016,0.182,840,840,1,26,0,0,0,plans/paid_after_2.json
+paid,after,3,Seq Scan,0.084,0.268,0.017,0.206,840,840,1,26,0,0,0,plans/paid_after_3.json

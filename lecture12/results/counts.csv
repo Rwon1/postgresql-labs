@@ -1,0 +1,6 @@
+﻿table_name,rows_count
+customers,200
+products,250
+orders,2400
+order_items,7200
+partitions,12

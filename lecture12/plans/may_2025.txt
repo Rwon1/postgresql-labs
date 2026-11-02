@@ -1,0 +1,11 @@
+EXPLAIN (ANALYZE, BUFFERS) SELECT count(*) FROM l12_orders WHERE order_date >= DATE '2025-05-01' AND order_date < DATE '2025-06-01';
+
+Aggregate  (cost=5.80..5.81 rows=1 width=8) (actual time=0.069..0.070 rows=1 loops=1)
+  Buffers: shared hit=2
+  ->  Seq Scan on l12_orders_2025_05 l12_orders  (cost=0.00..5.25 rows=217 width=0) (actual time=0.021..0.050 rows=217 loops=1)
+        Filter: ((order_date >= '2025-05-01'::date) AND (order_date < '2025-06-01'::date))
+        Buffers: shared hit=2
+Planning:
+  Buffers: shared hit=253
+Planning Time: 1.568 ms
+Execution Time: 0.115 ms

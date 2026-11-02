@@ -1,0 +1,156 @@
+{
+  "client": "psql (PostgreSQL) 16.10",
+  "seed_verification": [
+    {
+      "row_count": 200,
+      "only_first": 0,
+      "table_name": "l11_customers",
+      "only_second": 0
+    },
+    {
+      "row_count": 250,
+      "only_first": 0,
+      "table_name": "l11_products",
+      "only_second": 0
+    },
+    {
+      "row_count": 1200,
+      "only_first": 0,
+      "table_name": "l11_orders",
+      "only_second": 0
+    },
+    {
+      "row_count": 3600,
+      "only_first": 0,
+      "table_name": "l11_order_items",
+      "only_second": 0
+    }
+  ],
+  "environment": [
+    {
+      "jit": "on",
+      "timezone": "UTC",
+      "work_mem": "4MB",
+      "measured_at": "2026-11-02T22:41:45.848838+00:00",
+      "database_name": "new11_egorov_20261103",
+      "seq_page_cost": "1",
+      "enable_seqscan": "on",
+      "server_version": "PostgreSQL 16.10, compiled by Visual C++ build 1925, 64-bit",
+      "shared_buffers": "128MB",
+      "enable_indexscan": "on",
+      "random_page_cost": "4",
+      "enable_bitmapscan": "on",
+      "server_version_num": "160010",
+      "max_parallel_workers_per_gather": "2"
+    }
+  ],
+  "status_distribution": [
+    {
+      "rows": 120,
+      "status": "cancelled",
+      "percent": 10.0
+    },
+    {
+      "rows": 30,
+      "status": "failed",
+      "percent": 2.5
+    },
+    {
+      "rows": 210,
+      "status": "new",
+      "percent": 17.5
+    },
+    {
+      "rows": 840,
+      "status": "paid",
+      "percent": 70.0
+    }
+  ],
+  "equality:customer": [
+    {
+      "query": "customer",
+      "only_after": 0,
+      "only_before": 0
+    }
+  ],
+  "index:customer": [
+    {
+      "bytes": 32768,
+      "index_name": "l11_orders_customer_idx"
+    }
+  ],
+  "equality:last20": [
+    {
+      "query": "last20",
+      "only_after": 0,
+      "only_before": 0
+    }
+  ],
+  "index:last20": [
+    {
+      "bytes": 57344,
+      "index_name": "l11_orders_page_idx"
+    }
+  ],
+  "equality:revenue": [
+    {
+      "query": "revenue",
+      "only_after": 0,
+      "only_before": 0
+    }
+  ],
+  "equality:failed": [
+    {
+      "query": "failed",
+      "only_after": 0,
+      "only_before": 0
+    }
+  ],
+  "equality:paid": [
+    {
+      "query": "paid",
+      "only_after": 0,
+      "only_before": 0
+    }
+  ],
+  "index:failed": [
+    {
+      "bytes": 16384,
+      "index_name": "l11_orders_failed_idx"
+    }
+  ],
+  "double_count": [
+    {
+      "item_rows": 3600,
+      "join_rows": 3600,
+      "item_total": 19203018.0,
+      "order_total": 19203018.0,
+      "grouped_total": 19203018.0,
+      "mismatched_orders": 0,
+      "distinct_join_items": 3600,
+      "incorrect_sum_order_total_after_join": 57609054.0
+    }
+  ],
+  "final_indexes": [
+    {
+      "indexdef": "CREATE UNIQUE INDEX l11_customers_pkey ON public.l11_customers USING btree (customer_id)",
+      "indexname": "l11_customers_pkey"
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX l11_order_items_pkey ON public.l11_order_items USING btree (item_id)",
+      "indexname": "l11_order_items_pkey"
+    },
+    {
+      "indexdef": "CREATE INDEX l11_orders_failed_idx ON public.l11_orders USING btree (created_at) WHERE (status = 'failed'::text)",
+      "indexname": "l11_orders_failed_idx"
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX l11_orders_pkey ON public.l11_orders USING btree (order_id)",
+      "indexname": "l11_orders_pkey"
+    },
+    {
+      "indexdef": "CREATE UNIQUE INDEX l11_products_pkey ON public.l11_products USING btree (product_id)",
+      "indexname": "l11_products_pkey"
+    }
+  ]
+}
